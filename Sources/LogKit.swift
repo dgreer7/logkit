@@ -109,7 +109,7 @@ internal let LK_DEVICE_OS: (description: String, majorVersion: Int, minorVersion
         return (description, version.majorVersion, version.minorVersion, version.patchVersion, build)
     } else {
         let version = systemVersion?["ProductVersion"] as? String
-        let parts = version?.characters.split(separator: ".") ?? []
+        let parts = version?.split(separator: ".") ?? []
         let major = parts.count > 0 ? Int(String(parts[0])) ?? -1 : -1
         let minor = parts.count > 1 ? Int(String(parts[1])) ?? -1 : -1
         let patch = parts.count > 2 ? Int(String(parts[2])) ?? -1 : -1
@@ -153,7 +153,7 @@ internal let LK_DEVICE_IDS: (vendor: String, advertising: String) = {
         let advertisingID = ""
     #else
         let adManager = ASIdentifierManager.shared()
-        let advertisingID = (adManager?.isAdvertisingTrackingEnabled)! ? adManager?.advertisingIdentifier.uuidString : ""
+        let advertisingID = (adManager.isAdvertisingTrackingEnabled) ? adManager.advertisingIdentifier.uuidString : ""
     #endif
     return (vendorID, advertisingID)
 #else
@@ -179,7 +179,7 @@ internal extension FileManager {
 
         let dirPath = URL.deletingLastPathComponent().path
         let filePath = URL.path
-        guard dirPath.characters.count > 0 && filePath.characters.count > 0 else {
+        guard dirPath.count > 0 && filePath.count > 0 else {
             assertionFailure("Invalid path: \(URL.absoluteString)")
             throw NSError(domain: NSURLErrorDomain, code: NSURLErrorBadURL, userInfo: [NSURLErrorKey: URL])
         }
